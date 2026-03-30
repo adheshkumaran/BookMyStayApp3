@@ -1,35 +1,96 @@
-/**
- * UseCase1HotelBookingApp
- *
- * This class represents the entry point of the Hotel Booking Management System.
- * It demonstrates how a Java application starts execution and prints output
- * to the console.
- *
- * The program displays a welcome message along with the application name
- * and version.
- *
- * @author YourName
- * @version 1.0
- */
- class UseCase1HotelBookingApp {
+// Version 2.1 (Refactored)
 
-    /**
-     * Main method - Entry point of the application
-     *
-     * @param args Command line arguments
-     */
+// Abstract Class
+abstract class Room {
+    private String roomType;
+    private int beds;
+    private double size;
+    private double price;
+
+    // Constructor
+    public Room(String roomType, int beds, double size, double price) {
+        this.roomType = roomType;
+        this.beds = beds;
+        this.size = size;
+        this.price = price;
+    }
+
+    // Getters
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public int getBeds() {
+        return beds;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    // Display Method
+    public void displayRoomDetails() {
+        System.out.println("Room Type: " + roomType);
+        System.out.println("Beds: " + beds);
+        System.out.println("Size: " + size + " sq.ft");
+        System.out.println("Price: ₹" + price);
+    }
+}
+
+// Single Room
+class SingleRoom extends Room {
+    public SingleRoom() {
+        super("Single Room", 1, 150.0, 2000.0);
+    }
+}
+
+// Double Room
+class DoubleRoom extends Room {
+    public DoubleRoom() {
+        super("Double Room", 2, 250.0, 3500.0);
+    }
+}
+
+// Suite Room
+class SuiteRoom extends Room {
+    public SuiteRoom() {
+        super("Suite Room", 3, 500.0, 8000.0);
+    }
+}
+
+// Main Class (IMPORTANT: File name must match this)
+class UseCase2RoomInitialization {
+
     public static void main(String[] args) {
 
-        // Display welcome message
-        System.out.println("==================================");
-        System.out.println("   Welcome to Book My Stay App   ");
-        System.out.println("==================================");
+        // Polymorphism
+        Room single = new SingleRoom();
+        Room doubleRoom = new DoubleRoom();
+        Room suite = new SuiteRoom();
 
-        // Display application details
-        System.out.println("Application Name : Hotel Booking System");
-        System.out.println("Version          : v1.0");
+        // Static availability
+        int singleAvailability = 5;
+        int doubleAvailability = 3;
+        int suiteAvailability = 2;
 
-        // Exit message
-        System.out.println("\nApplication started successfully!");
+        System.out.println("===== HOTEL ROOM DETAILS =====\n");
+
+        single.displayRoomDetails();
+        System.out.println("Available: " + singleAvailability);
+        System.out.println("----------------------------");
+
+        doubleRoom.displayRoomDetails();
+        System.out.println("Available: " + doubleAvailability);
+        System.out.println("----------------------------");
+
+        suite.displayRoomDetails();
+        System.out.println("Available: " + suiteAvailability);
+        System.out.println("----------------------------");
+
+        System.out.println("\nApplication Terminated.");
     }
 }
