@@ -1,13 +1,15 @@
-// Version 2.1 (Refactored)
+// Version 3.1 (Refactored)
 
-// Abstract Class
+import java.util.HashMap;
+import java.util.Map;
+
+// Abstract Room Class (same as previous use case)
 abstract class Room {
     private String roomType;
     private int beds;
     private double size;
     private double price;
 
-    // Constructor
     public Room(String roomType, int beds, double size, double price) {
         this.roomType = roomType;
         this.beds = beds;
@@ -15,7 +17,6 @@ abstract class Room {
         this.price = price;
     }
 
-    // Getters
     public String getRoomType() {
         return roomType;
     }
@@ -32,7 +33,6 @@ abstract class Room {
         return price;
     }
 
-    // Display Method
     public void displayRoomDetails() {
         System.out.println("Room Type: " + roomType);
         System.out.println("Beds: " + beds);
@@ -41,55 +41,93 @@ abstract class Room {
     }
 }
 
-// Single Room
+// Concrete Room Classes
 class SingleRoom extends Room {
     public SingleRoom() {
         super("Single Room", 1, 150.0, 2000.0);
     }
 }
 
-// Double Room
 class DoubleRoom extends Room {
     public DoubleRoom() {
         super("Double Room", 2, 250.0, 3500.0);
     }
 }
 
-// Suite Room
 class SuiteRoom extends Room {
     public SuiteRoom() {
         super("Suite Room", 3, 500.0, 8000.0);
     }
 }
 
-// Main Class (IMPORTANT: File name must match this)
-class UseCase2RoomInitialization {
+// 🔥 New Class: Centralized Inventory Management
+class RoomInventory {
+
+    private HashMap<String, Integer> inventory;
+
+    // Constructor → Initialize inventory
+    public RoomInventory() {
+        inventory = new HashMap<>();
+
+        // Initial room availability
+        inventory.put("Single Room", 5);
+        inventory.put("Double Room", 3);
+        inventory.put("Suite Room", 2);
+    }
+
+    // Get availability
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
+    }
+
+    // Update availability (controlled update)
+    public void updateAvailability(String roomType, int newCount) {
+        if (inventory.containsKey(roomType)) {
+            inventory.put(roomType, newCount);
+        } else {
+            System.out.println("Room type not found!");
+        }
+    }
+
+    // Display full inventory
+    public void displayInventory() {
+        System.out.println("===== ROOM INVENTORY =====");
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + " -> Available: " + entry.getValue());
+        }
+    }
+}
+
+// Main Class
+class UseCase3InventorySetup {
 
     public static void main(String[] args) {
 
-        // Polymorphism
+        // Create room objects
         Room single = new SingleRoom();
         Room doubleRoom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        // Static availability
-        int singleAvailability = 5;
-        int doubleAvailability = 3;
-        int suiteAvailability = 2;
+        // Initialize Inventory
+        RoomInventory inventory = new RoomInventory();
 
         System.out.println("===== HOTEL ROOM DETAILS =====\n");
 
         single.displayRoomDetails();
-        System.out.println("Available: " + singleAvailability);
+        System.out.println("Available: " + inventory.getAvailability(single.getRoomType()));
         System.out.println("----------------------------");
 
         doubleRoom.displayRoomDetails();
-        System.out.println("Available: " + doubleAvailability);
+        System.out.println("Available: " + inventory.getAvailability(doubleRoom.getRoomType()));
         System.out.println("----------------------------");
 
         suite.displayRoomDetails();
-        System.out.println("Available: " + suiteAvailability);
+        System.out.println("Available: " + inventory.getAvailability(suite.getRoomType()));
         System.out.println("----------------------------");
+
+        // Show centralized inventory
+        System.out.println();
+        inventory.displayInventory();
 
         System.out.println("\nApplication Terminated.");
     }
