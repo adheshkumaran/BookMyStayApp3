@@ -66,7 +66,7 @@ public class BookMyStayApp {
         manager.addService(reservationId, food);
         manager.addService(reservationId, cab);
 
-        // Display services
+
         System.out.println("Reservation ID: " + reservationId);
         System.out.println("Selected Services:");
 
