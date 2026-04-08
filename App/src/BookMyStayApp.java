@@ -48,8 +48,6 @@ class AddOnServiceManager {
         return total;
     }
 }
-
-// Main class (IMPORTANT: file name must match this)
 public class BookMyStayApp {
     public static void main(String[] args) {
 
